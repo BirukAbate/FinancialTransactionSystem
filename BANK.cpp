@@ -52,3 +52,11 @@ void Bank::saveToFile(const std::string &filename) const {
         std::cerr << "Error opening file for writing." << std::endl;
     }
 }
+
+double Bank::calculateBalance() const {
+    double balance = 0.0;
+    for (const Transaction& transaction : transactions) {
+        balance += transaction.amount;
+    }
+    return balance;
+}

@@ -20,7 +20,7 @@ public:
     void displayTransactions() const;
     void saveToFile(const std::string& filename) const;
     void loadFromFile(const std::string& filename);
-
+    double calculateBalance() const;
 
 };
 

@@ -8,3 +8,10 @@
 #endif //FINANCIALTRANSACTIONSYSTEM_TRANSACTION_H
 
 #include <string>
+
+using namespace std;
+
+struct Transaction{
+    string date;
+    double amount;
+};

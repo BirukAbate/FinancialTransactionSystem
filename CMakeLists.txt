@@ -3,4 +3,4 @@ project(FinancialTransactionSystem)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(FinancialTransactionSystem main.cpp)
+add_executable(FinancialTransactionSystem main.cpp BANK.cpp BANK.h TRANSACTION.h)

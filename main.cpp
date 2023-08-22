@@ -3,7 +3,7 @@
 using namespace std;
 #include "BANK.h"
 
-int main() {
+/*int main() {
     Bank bank;
 
     bank.loadFromFile("transactions.txt"); // Carica prima di visualizzare
@@ -50,41 +50,6 @@ int main() {
 
     return 0;
 }
-
-
-/*int main(){
-
-        Bank bank;
-        bank.loadFromFile("transactions.txt");
-        bank.addTransaction(100.0, "2023-08-01");
-        bank.addTransaction(-50.0, "2023-08-02");
-        bank.addTransaction(200.0, "2023-08-03");
-
-        std::cout << "Transactions after adding:" << std::endl;
-        bank.displayTransactions();
-        cout<<endl;
-        double balance = bank.calculateBalance();
-        std::cout << "Balance after adding: " << balance << std::endl;
-
-        bank.saveToFile("transactions.txt");
-        std::cout << "Transactions saved to file." << std::endl;
-
-        bank.addTransaction(-30.0, "2023-08-04");
-        std::cout << "Transactions after adding another:" << std::endl;
-        bank.saveToFile("transactions.txt");
-        std::cout << "Transactions saved to file." << std::endl;
-
-        bank.displayTransactions();
-
-        balance = bank.calculateBalance();
-        std::cout << "Balance after adding another: " << balance << std::endl;
-
-
-        bank.displayTransactions();
-
-        balance = bank.calculateBalance();
-        std::cout << "Balance after loading: " << balance << std::endl;
-
-        return 0;
-    }
 */
+
+

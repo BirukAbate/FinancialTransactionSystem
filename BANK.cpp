@@ -6,8 +6,37 @@
 
 #include <iostream>
 #include <fstream>
+#include <ctime> // Per la manipolazione delle date e degli orari
+
+bool Bank::isValidDate(const std::string& date) {
+    std::tm parsedDate = {}; // Struttura per conservare la data
+
+    if (std::sscanf(date.c_str(), "%d-%d-%d", &parsedDate.tm_year, &parsedDate.tm_mon, &parsedDate.tm_mday) != 3) {
+        std::cerr << "Invalid date format: " << date << std::endl;
+        return false;
+    }
+
+    parsedDate.tm_year -= 1900; // Adeguare l'anno
+    parsedDate.tm_mon -= 1;
+    // Ottenere l'orario corrente
+    std::time_t currentTime = std::time(nullptr);
+    std::tm currentTM = *std::localtime(&currentTime);
+
+    // Confrontare la data inserita con l'orario corrente
+    if (std::mktime(&parsedDate) > std::mktime(&currentTM)) {
+        std::cerr << "Transaction date is in the future: " << date << std::endl;
+        return false;
+    }
+
+    return true;
+}
+
 
 void Bank::addTransaction(double amount, const std::string &date) {
+
+    if (!isValidDate(date)) {
+        return;
+    }
 
     Transaction transaction;
     transaction.amount = amount;

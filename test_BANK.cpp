@@ -17,57 +17,43 @@ protected:
 
 // Test caso per l'aggiunta di transazioni e il calcolo del saldo
 TEST_F(BankTest, AddTransactionAndCalculateBalance) {
-    // Aggiungi transazioni positive e negative
-    bank.addTransaction(100.0, "2023-08-01");
-    bank.addTransaction(-50.0, "2023-08-02");
-    bank.addTransaction(200.0, "2023-08-03");
+    bank.addTransaction("Transaction1", 100.0, "2023-08-01");
+    bank.addTransaction("Transaction2", -50.0, "2023-08-02");
+    bank.addTransaction("Transaction3", 200.0, "2023-08-03");
 
-    // Calcola il saldo atteso dopo le transazioni
     double expectedBalance = 100.0 - 50.0 + 200.0;
-
-    // Calcola il saldo effettivo utilizzando il metodo della classe
     double actualBalance = bank.calculateBalance();
 
-    // Confronta il saldo atteso con il saldo effettivo
     EXPECT_DOUBLE_EQ(expectedBalance, actualBalance);
 }
 
 // Altro test caso per il salvataggio e il caricamento delle transazioni
 TEST_F(BankTest, SaveAndLoadTransactions) {
-    // Aggiungi transazioni positive e negative
-    bank.addTransaction(100.0, "2023-08-01");
-    bank.addTransaction(-50.0, "2023-08-02");
-    bank.addTransaction(200.0, "2023-08-03");
+    bank.addTransaction("Transaction1", 100.0, "2023-08-01");
+    bank.addTransaction("Transaction2", -50.0, "2023-08-02");
+    bank.addTransaction("Transaction3", 200.0, "2023-08-03");
 
-    // Salva le transazioni su un file temporaneo
     const std::string tempFileName = "test_transactions.tmp";
     bank.saveToFile(tempFileName);
 
-    // Crea una nuova istanza di Bank per caricare le transazioni
     Bank loadedBank;
     loadedBank.loadFromFile(tempFileName);
 
-    // Calcola il saldo atteso dopo le transazioni
     double expectedBalance = 100.0 - 50.0 + 200.0;
-
-    // Calcola il saldo effettivo utilizzando il metodo della classe caricata
     double actualBalance = loadedBank.calculateBalance();
 
-    // Confronta il saldo atteso con il saldo effettivo
     EXPECT_DOUBLE_EQ(expectedBalance, actualBalance);
 }
 
 // Test caso per il caricamento corretto delle transazioni da file
 TEST_F(BankTest, LoadTransactionsFromFile) {
-    bank.addTransaction(100.0, "2023-08-01");
-    bank.addTransaction(-50.0, "2023-08-02");
-    bank.addTransaction(200.0, "2023-08-03");
+    bank.addTransaction("Transaction1", 100.0, "2023-08-01");
+    bank.addTransaction("Transaction2", -50.0, "2023-08-02");
+    bank.addTransaction("Transaction3", 200.0, "2023-08-03");
 
-    // Salva le transazioni su un file temporaneo
     const std::string tempFileName = "test_transactions.tmp";
     bank.saveToFile(tempFileName);
 
-    // Crea una nuova istanza di Bank e carica le transazioni da file
     Bank loadedBank;
     loadedBank.loadFromFile(tempFileName);
 
@@ -76,13 +62,16 @@ TEST_F(BankTest, LoadTransactionsFromFile) {
 
     EXPECT_DOUBLE_EQ(expectedBalance, actualBalance);
 }
+
 // Test caso per l'aggiunta di transazioni con verifica della data
 TEST_F(BankTest, AddTransactionWithValidDate) {
-    bank.addTransaction(100.0, "2023-08-01");
-    bank.addTransaction(-50.0, "2023-08-02");
-    bank.addTransaction(200.0, "2023-08-03");
+    bank.addTransaction("Transaction1", 100.0, "2023-08-01");
+    bank.addTransaction("Transaction2", -50.0, "2023-08-02");
+    bank.addTransaction("Transaction3", 200.0, "2023-08-03");
 
-
+    // Aggiungi ulteriori transazioni con date valide
+    bank.addTransaction("Transaction4", 50.0, "2023-08-04");
+    bank.addTransaction("Transaction5", -20.0, "2023-08-05");
 }
 
 // Test caso per verificare la corretta funzionalità di isValid per date future
@@ -106,26 +95,60 @@ TEST_F(BankTest, IsValidWithValidDate) {
 
 // Test caso per la visualizzazione delle transazioni
 TEST_F(BankTest, DisplayTransactions) {
-    bank.addTransaction(100.0, "2023-08-01");
-    bank.addTransaction(-50.0, "2023-08-02");
-    bank.addTransaction(200.0, "2023-08-03");
+    bank.addTransaction("Transaction1", 100.0, "2023-08-01");
+    bank.addTransaction("Transaction2", -50.0, "2023-08-02");
+    bank.addTransaction("Transaction3", 200.0, "2023-08-03");
 
-    std::ostringstream oss;
-    std::streambuf* coutBuffer = std::cout.rdbuf();
-    std::cout.rdbuf(oss.rdbuf());
-
+    testing::internal::CaptureStdout();
     bank.displayTransactions();
-
-    std::cout.rdbuf(coutBuffer);
+    std::string output = testing::internal::GetCapturedStdout();
 
     std::string expectedOutput =
-            "Amount: 100 Date: 2023-08-01\n"
-            "Amount: -50 Date: 2023-08-02\n"
-            "Amount: 200 Date: 2023-08-03\n";
+            "Index: 0 Name: Transaction1 Amount: 100 Date: 2023-08-01\n"
+            "Index: 1 Name: Transaction2 Amount: -50 Date: 2023-08-02\n"
+            "Index: 2 Name: Transaction3 Amount: 200 Date: 2023-08-03\n"
+            "Total transactions: 3\n";
 
-    EXPECT_EQ(oss.str(), expectedOutput);
+    EXPECT_EQ(output, expectedOutput);
 }
 
+// Test caso per la modifica di una transazione
+TEST_F(BankTest, EditTransaction) {
+    bank.addTransaction("Transaction1", 100.0, "2023-08-01");
+    bank.addTransaction("Transaction2", -50.0, "2023-08-02");
+    bank.addTransaction("Transaction3", 200.0, "2023-08-03");
+
+    // Modifica la transazione all'indice 1
+    bank.editTransaction(1, "ModifiedTransaction", 150.0, "2023-08-15");
+
+    // Calcola il saldo atteso dopo la modifica
+    double expectedBalance = 100.0 + 150.0 + 200.0;
+
+    // Calcola il saldo effettivo utilizzando il metodo della classe
+    double actualBalance = bank.calculateBalance();
+
+    // Confronta il saldo atteso con il saldo effettivo
+    EXPECT_DOUBLE_EQ(expectedBalance, actualBalance);
+}
+
+// Test caso per l'eliminazione di una transazione
+TEST_F(BankTest, DeleteTransaction) {
+    bank.addTransaction("Transaction1", 100.0, "2023-08-01");
+    bank.addTransaction("Transaction2", -50.0, "2023-08-02");
+    bank.addTransaction("Transaction3", 200.0, "2023-08-03");
+
+    // Elimina la transazione all'indice 1
+    bank.deleteTransaction(1);
+
+    // Calcola il saldo atteso dopo l'eliminazione
+    double expectedBalance = 100.0 + 200.0;
+
+    // Calcola il saldo effettivo utilizzando il metodo della classe
+    double actualBalance = bank.calculateBalance();
+
+    // Confronta il saldo atteso con il saldo effettivo
+    EXPECT_DOUBLE_EQ(expectedBalance, actualBalance);
+}
 
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);

@@ -1,9 +1,9 @@
-#include <iostream>
+/*#include <iostream>
 
 using namespace std;
 #include "BANK.h"
 
-/*int main() {
+int main() {
     Bank bank;
 
     bank.loadFromFile("transactions.txt"); // Carica prima di visualizzare

@@ -32,23 +32,27 @@ bool Bank::isValidDate(const std::string& date) {
 }
 
 
-void Bank::addTransaction(double amount, const std::string &date) {
+void Bank::addTransaction(const std::string &name, double amount, const std::string &date) {
 
     if (!isValidDate(date)) {
         return;
     }
 
     Transaction transaction;
+    transaction.name = name;
     transaction.amount = amount;
     transaction.date = date;
     transactions.push_back(transaction);
+    transactionCounter++;
 
 }
 
 void Bank::displayTransactions() const {
-    for (const auto& transaction : transactions) {
-        std::cout << "Amount: " << transaction.amount << " Date: " << transaction.date << std::endl;
+    for (size_t i = 0; i < transactions.size(); ++i) {
+        const auto& transaction = transactions[i];
+        std::cout << "Index: " << i << " Name: " << transaction.name << " Amount: " << transaction.amount << " Date: " << transaction.date << std::endl;
     }
+    std::cout << "Total transactions: " << transactionCounter << std::endl;
 }
 
 void Bank::loadFromFile(const std::string &filename) {
@@ -88,4 +92,34 @@ double Bank::calculateBalance() const {
         balance += transaction.amount;
     }
     return balance;
+}
+
+void Bank::editTransaction(int index, const std::string &newName, double newAmount, const std::string &newDate) {
+    if (index < 0 || index >= transactions.size()) {
+        std::cerr << "Invalid index for transaction editing." << std::endl;
+        return;
+    }
+
+    if (!isValidDate(newDate)) {
+        std::cerr << "Invalid date format: " << newDate << ". Transaction not edited." << std::endl;
+        return;
+    }
+
+    transactions[index].name = newName;
+    transactions[index].amount = newAmount;
+    transactions[index].date = newDate;
+
+    std::cout << "Transaction at index " << index << " edited successfully." << std::endl;
+}
+
+void Bank::deleteTransaction(int index) {
+    if (index < 0 || index >= transactions.size()) {
+        std::cerr << "Invalid index for transaction deletion." << std::endl;
+        return;
+    }
+
+    transactions.erase(transactions.begin() + index);
+    transactionCounter--;
+
+    std::cout << "Transaction at index " << index << " deleted successfully." << std::endl;
 }

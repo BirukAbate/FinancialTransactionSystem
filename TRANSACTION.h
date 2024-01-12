@@ -1,7 +1,7 @@
 //
 // Created by Biruk Abate on 21/08/23.
 //
-
+/*
 #ifndef FINANCIALTRANSACTIONSYSTEM_TRANSACTION_H
 #define FINANCIALTRANSACTIONSYSTEM_TRANSACTION_H
 
@@ -15,3 +15,5 @@ struct Transaction{
     string date;
     double amount;
 };
+
+ */

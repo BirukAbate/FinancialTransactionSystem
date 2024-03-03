@@ -3,7 +3,7 @@ project(FinancialTransactionSystem)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(FinancialTransactionSystem main.cpp BANK.cpp BANK.h TRANSACTION.h test_BANK.cpp)
+add_executable(FinancialTransactionSystem BANK.cpp BANK.h test_BANK.cpp)
 
 # Aggiungi le directory di inclusione per Google Test
 include_directories(googletest/include)

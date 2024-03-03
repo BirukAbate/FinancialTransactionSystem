@@ -20,7 +20,7 @@ private:
         Transaction(const std::string& name, double amount, const std::string& date)
                 : name(name), amount(amount), date(date) {
             if (name.empty() || amount == 0.0 || date.empty()) {
-                throw std::invalid_argument("Il nome, l'importo e la data sono obbligatori per creare una transazione.");
+                throw std::invalid_argument("name, amount and date must be provided.");
             }
 
             std::tm parsedDate = {}; // Struttura per conservare la data

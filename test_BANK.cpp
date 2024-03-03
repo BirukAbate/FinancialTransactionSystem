@@ -7,11 +7,11 @@ protected:
     Bank bank;
 
     void SetUp() override {
-        // Inizializza lo stato prima di ogni test (opzionale)
+        // Inizializza lo stato prima di ogni test
     }
 
     void TearDown() override {
-        // Pulizia dopo ogni test (opzionale)
+        // Pulizia dopo ogni test
     }
 };
 
@@ -247,6 +247,8 @@ TEST_F(BankTest, SearchByEmptyName) {
     std::string expectedOutput = "No transactions found for name: \n";
     EXPECT_EQ(output, expectedOutput);
 }
+
+
 
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);

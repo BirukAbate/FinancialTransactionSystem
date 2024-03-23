@@ -79,14 +79,18 @@ public:
     double getCurrentBalance() const {
         return currentBalance;
     };
+    int getTotalTransactions() const {
+        return transactions.size();
+    }
+
     void addTransaction(const std::string& name, double amount, const std::string& date);
     void displayTransactions() const;
     void saveToFile(const std::string& filename) const;
     void loadFromFile(const std::string& filename);
     bool deleteTransaction(int index);
     void editTransaction(int index, const std::string& newName, double newAmount, const std::string& newDate);
-    void searchByName(const std::string& name);
-    void searchByDate(const std::string& date);
+    void searchByName(const std::string& name) const;
+    void searchByDate(const std::string& date) const;
 
 };
 

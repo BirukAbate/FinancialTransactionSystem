@@ -62,6 +62,14 @@ TEST_F(BankTest, AddTransactionsWithValidDates) {
     bank.addTransaction("Transaction3", 200.0, "2023-08-03");
     bank.addTransaction("Transaction4", 50.0, "2023-08-04");
     bank.addTransaction("Transaction5", -20.0, "2023-08-05");
+
+    int totalTransactions = bank.getTotalTransactions();
+
+    int expectedTotalTransactions = 5;
+
+    // Verifica se il numero totale di transazioni corrisponde al valore atteso
+    EXPECT_EQ(expectedTotalTransactions, totalTransactions);
+
 }
 
 // Test caso per la modifica di una transazione

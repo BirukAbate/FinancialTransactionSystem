@@ -63,11 +63,7 @@ void Bank::editTransaction(int index, const std::string &newName, double newAmou
         throw std::invalid_argument("Amount cannot be zero");
     }
 
-    /*if (!validateDate(newDate)) {
-        throw std::invalid_argument("Invalid date format");
-    }
-     */
-
+        //controllo data
     std::tm parsedDate = {}; // Struttura per conservare la data
 
     if (std::sscanf(newDate.c_str(), "%d-%d-%d", &parsedDate.tm_year, &parsedDate.tm_mon, &parsedDate.tm_mday) != 3) {
@@ -108,7 +104,7 @@ bool Bank::deleteTransaction(int index) {
     return true;
 }
 
-void Bank::searchByDate(const std::string &date) {
+void Bank::searchByDate(const std::string &date) const {
     bool found = false;
     for (const auto& transaction : transactions) {
         if (transaction.getDate() == date) {
@@ -121,7 +117,7 @@ void Bank::searchByDate(const std::string &date) {
     }
 }
 
-void Bank::searchByName(const std::string &name) {
+void Bank::searchByName(const std::string &name) const {
     bool found = false;
     for (const auto& transaction : transactions) {
         if (transaction.getName() == name) {
